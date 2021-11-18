@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 01:01:19 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 01:34:49 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,9 @@ void computor::compile() {
 	std::unordered_set<std::string> identifiers;
 	while (i < tokens.size() - 1) {
 		if (tokens[i].get_type() == NUMBER) {
+			int minus_coefficient = (i > 0 && tokens[i - 1].get_type() == MINUS ? -1 : 1);
 			if (tokens[i + 1].get_type() == END || tokens[i + 1].get_type() == PLUS || tokens[i + 1].get_type() == MINUS || tokens[i + 1].get_type() == EQUAL) {
-				expressions.emplace_back(0, sign * std::stod(tokens[i].get_value()), "");
+				expressions.emplace_back(0, minus_coefficient * sign * std::stod(tokens[i].get_value()), "");
 			} else if (tokens[i + 1].get_type() == IDENTIFIER) {
 				const std::string &identifier = tokens[i + 1].get_value();
 				if (!identifier.empty()) {
@@ -131,22 +132,23 @@ void computor::compile() {
 					break;
 				}
 				if (tokens[i + 2].get_type() == END || tokens[i + 2].get_type() == PLUS || tokens[i + 2].get_type() == MINUS || tokens[i + 2].get_type() == EQUAL) {
-					expressions.emplace_back(1, sign * std::stod(tokens[i].get_value()), tokens[i + 1].get_value());
+					expressions.emplace_back(1, minus_coefficient * sign * std::stod(tokens[i].get_value()), tokens[i + 1].get_value());
 					++i;
 				} else if (tokens[i + 2].get_type() == POWER) {
-					expressions.emplace_back(std::stoi(tokens[i + 3].get_value()), sign * std::stod(tokens[i].get_value()), tokens[i + 1].get_value());
+					expressions.emplace_back(std::stoi(tokens[i + 3].get_value()), minus_coefficient * sign * std::stod(tokens[i].get_value()), tokens[i + 1].get_value());
 					i += 3;
 				}
 			} else if (tokens[i + 1].get_type() == MULTIPLY) {
 				if (tokens[i + 3].get_type() == END || tokens[i + 3].get_type() == PLUS || tokens[i + 3].get_type() == MINUS || tokens[i + 3].get_type() == EQUAL) {
-					expressions.emplace_back(1, sign * std::stod(tokens[i].get_value()), tokens[i + 2].get_value());
+					expressions.emplace_back(1, minus_coefficient * sign * std::stod(tokens[i].get_value()), tokens[i + 2].get_value());
 					i += 2;
 				} else if (tokens[i + 3].get_type() == POWER) {
-					expressions.emplace_back(std::stoi(tokens[i + 4].get_value()), sign * std::stod(tokens[i].get_value()), tokens[i + 2].get_value());
+					expressions.emplace_back(std::stoi(tokens[i + 4].get_value()), minus_coefficient * sign * std::stod(tokens[i].get_value()), tokens[i + 2].get_value());
 					i += 4;
 				}
 			}
 		} else if (tokens[i].get_type() == IDENTIFIER) {
+			int minus_coefficient = (i > 0 && tokens[i - 1].get_type() == MINUS ? -1 : 1);
 			const std::string &identifier = tokens[i].get_value();
 			if (!identifier.empty()) {
 				identifiers.insert(identifier);
@@ -156,9 +158,9 @@ void computor::compile() {
 				break;
 			}
 			if (tokens[i + 1].get_type() == END || tokens[i + 1].get_type() == PLUS || tokens[i + 1].get_type() == MINUS || tokens[i + 1].get_type() == EQUAL) {
-					expressions.emplace_back(1, sign * 1.0, tokens[i].get_value());
+					expressions.emplace_back(1, minus_coefficient * sign * 1.0, tokens[i].get_value());
 				} else if (tokens[i + 1].get_type() == POWER) {
-					expressions.emplace_back(std::stoi(tokens[i + 2].get_value()), sign * 1.0, tokens[i].get_value());
+					expressions.emplace_back(std::stoi(tokens[i + 2].get_value()), minus_coefficient * sign * 1.0, tokens[i].get_value());
 					i += 2;
 				}
 		} else if (tokens[i].get_type() == EQUAL) {
@@ -171,4 +173,32 @@ void computor::compile() {
 		tokens.clear();
 		identifiers.clear();
 	}
+
+	std::sort(expressions.begin(), expressions.end(),
+		[](const expression &exp1, const expression &exp2) {
+			return exp1.get_degree() < exp2.get_degree();
+		});
+
+	std::vector<expression> exps;
+	i = 1;
+	double c = expressions[0].get_coefficient();
+	std::string variable = identifiers.empty() ? "X" : *identifiers.begin();
+	while (i < expressions.size()) {
+		if (expressions[i].get_degree() == expressions[i - 1].get_degree()) {
+			c += expressions[i].get_coefficient();
+		} else {
+			std::cout << "====> c is " << c << std::endl;
+			if (c != 0) {
+				exps.emplace_back(expressions[i - 1].get_degree(), c, variable);
+			}
+			c = expressions[i].get_coefficient();
+		}
+		++i;
+	}
+	std::cout << "====> c is " << c << std::endl;
+	if (c != 0) {
+		exps.emplace_back(expressions.back().get_degree(), c, variable);
+	}
+	std::swap(exps, expressions);
+	exps.clear();
 }

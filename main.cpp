@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:40:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 01:06:28 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 01:14:02 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int main(int argc, char *argv[]) {
 			std::cout << "error: " << c.get_error_message() << std::endl;
 		else {
 			auto expressions = c.get_result();
-			std::sort(expressions.begin(), expressions.end(), [](const expression &exp1, const expression &exp2) { return exp1.get_degree() < exp2.get_degree(); });
 			for (expression exp : expressions) {
 				std::cout << "degree: " << exp.get_degree() << ", coefficient: " << exp.get_coefficient() << ", variable: " << exp.get_variable() << std::endl;
 			}
