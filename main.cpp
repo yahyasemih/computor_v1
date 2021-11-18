@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:40:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 19:03:25 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 20:58:18 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int argc, char *argv[]) {
 	if (argc != 2) {
-		std::cout << "Usage: computor \"equation\"" << std::endl;
+		std::cout << "usage: computor \"equation\"" << std::endl;
 		return 1;
 	} else {
 		computor c(argv[1]);
