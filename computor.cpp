@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 19:33:44 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 21:49:22 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void computor::generate_expressions() {
 
 	while (i < tokens.size() - 1) {
 		if (tokens[i].get_type() == NUMBER) {
-			int minus = (i > 0 && tokens[i - 1].get_type() == MINUS ? -1 : 1);
+			int minus = (tokens[i - 1].get_type() == MINUS ? -1 : 1);
 			if (tokens[i + 1].get_type() == END
 				|| tokens[i + 1].get_type() == PLUS
 				|| tokens[i + 1].get_type() == MINUS
@@ -173,7 +173,7 @@ void computor::generate_expressions() {
 				}
 			}
 		} else if (tokens[i].get_type() == IDENTIFIER) {
-			int minus = (i > 0 && tokens[i - 1].get_type() == MINUS ? -1 : 1);
+			int minus = (tokens[i - 1].get_type() == MINUS ? -1 : 1);
 			const std::string &identifier = tokens[i].get_value();
 			if (!identifier.empty()) {
 				identifiers.insert(identifier);
@@ -203,13 +203,13 @@ void computor::generate_expressions() {
 void computor::reduce_expressions() {
 	std::vector<expression> exps;
 	size_t i = 1;
-	double c = expressions[0].get_coefficient();
 
 	std::sort(expressions.begin(), expressions.end(),
 		[](const expression &exp1, const expression &exp2) {
 			return exp1.get_degree() < exp2.get_degree();
 		});
 
+	double c = expressions[0].get_coefficient();
 	std::string variable = identifiers.empty() ? "X" : *identifiers.begin();
 	while (i < expressions.size()) {
 		if (expressions[i].get_degree() == expressions[i - 1].get_degree()) {
