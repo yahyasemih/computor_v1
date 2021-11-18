@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:36:31 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 18:18:23 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:39:32 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ bool is_identifier(const std::string &str) {
 }
 
 double my_sqrt(double d) {
-	long i;
-	float x2, y;
+	long l;
+	float x, y;
 	const float threehalfs = 1.5F;
 
-	x2 = d * 0.5F;
+	x = d * 0.5F;
 	y  = d;
-	i  = * ( long * ) &y;
-	i  = 0x5f3759df - ( i >> 1 );
-	y  = * ( float * ) &i;
-	y  = y * ( threehalfs - ( x2 * y * y ) );
-	y  = y * ( threehalfs - ( x2 * y * y ) );
-	y  = y * ( threehalfs - ( x2 * y * y ) );
+	l  = *(long *) &y;
+	l  = 0x5f3759df - (l >> 1);
+	y  = *(float *) &l;
+	y  = y * (threehalfs - (x * y * y));
+	y  = y * (threehalfs - (x * y * y));
+	y  = y * (threehalfs - (x * y * y));
 
-	return -1/y;
+	return -1.0 / y;
 }
