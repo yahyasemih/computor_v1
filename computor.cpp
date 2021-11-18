@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 19:31:39 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:33:44 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ std::string extract_unexpected_token(std::string::const_iterator &it) {
 	return value;
 }
 
-type get_token_type(char c) {
+static type get_token_type(char c) {
 	if (c == '=') {
 		return EQUAL;
 	} else if (c == '+') {
