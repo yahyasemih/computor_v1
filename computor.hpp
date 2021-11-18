@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 01:02:40 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 16:20:07 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
+#include <sstream>
 #include "expression.hpp"
 #include "token.hpp"
 #include "utilities.hpp"
@@ -29,6 +30,7 @@ private:
 	std::string error_message;
 
 	void parse();
+	std::string get_reduced_form() const;
 public:
 	computor(const computor &other) = delete;
 	computor(computor &&other) = delete;
@@ -39,10 +41,12 @@ public:
 	computor(const char *input);
 	~computor() = default;
 
-	void compile();
 	inline bool is_malformed_input() const { return !error_message.empty(); }
 	inline const std::string &get_error_message() const { return error_message; }
 	inline const std::vector<expression> &get_result() const { return expressions; }
+
+	void compile();
+	void evaluate();
 };
 
 

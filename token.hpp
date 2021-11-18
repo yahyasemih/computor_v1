@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 19:57:56 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 00:58:59 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 17:32:03 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ public:
 	~token() = default;
 
 	const std::string &get_value() const { return value; }
-	const int get_index() const { return index; }
-	const type get_type() const { return token_type; }
+	int get_index() const { return index; }
+	type get_type() const { return token_type; }
 
 	bool is_token_expected(const token &other) const;
 };
