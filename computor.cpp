@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 19:00:54 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:31:39 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,7 @@ void computor::parse() {
 	}
 	tokens.emplace_back(input.size(), type::END);
 }
-
-void computor::compile() {
-	parse();
-	if (is_malformed_input()) {
-		return;
-	}
-
+void computor::check_syntax() {
 	for (size_t i = 1; i < tokens.size(); ++i) {
 		const token &previous = tokens[i - 1];
 		const token &current = tokens[i];
@@ -120,13 +114,16 @@ void computor::compile() {
 				error_message = "unexpected token `" + current.get_value()
 					+ "` at line 1:" + std::to_string(current.get_index());
 			}
-			break;
+			tokens.clear();
+			return;
 		}
 	}
+}
 
+void computor::generate_expressions() {
 	size_t i = 1;
 	int sign = 1;
-	std::unordered_set<std::string> identifiers;
+
 	while (i < tokens.size() - 1) {
 		if (tokens[i].get_type() == NUMBER) {
 			int minus = (i > 0 && tokens[i - 1].get_type() == MINUS ? -1 : 1);
@@ -201,20 +198,18 @@ void computor::compile() {
 		}
 		++i;
 	}
-	if (is_malformed_input()) {
-		expressions.clear();
-		tokens.clear();
-		identifiers.clear();
-	}
+}
+
+void computor::reduce_expressions() {
+	std::vector<expression> exps;
+	size_t i = 1;
+	double c = expressions[0].get_coefficient();
 
 	std::sort(expressions.begin(), expressions.end(),
 		[](const expression &exp1, const expression &exp2) {
 			return exp1.get_degree() < exp2.get_degree();
 		});
 
-	std::vector<expression> exps;
-	i = 1;
-	double c = expressions[0].get_coefficient();
 	std::string variable = identifiers.empty() ? "X" : *identifiers.begin();
 	while (i < expressions.size()) {
 		if (expressions[i].get_degree() == expressions[i - 1].get_degree()) {
@@ -232,6 +227,28 @@ void computor::compile() {
 	}
 	std::swap(exps, expressions);
 	exps.clear();
+}
+
+void computor::compile() {
+	parse();
+	if (is_malformed_input()) {
+		return;
+	}
+
+	check_syntax();
+	if (is_malformed_input()) {
+		return;
+	}
+
+	generate_expressions();
+	if (is_malformed_input()) {
+		expressions.clear();
+		tokens.clear();
+		identifiers.clear();
+		return;
+	}
+
+	reduce_expressions();
 }
 
 void computor::evaluate() {

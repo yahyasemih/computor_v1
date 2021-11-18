@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 19:09:09 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:27:43 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ private:
 	std::vector<expression> expressions;
 	const std::string input;
 	std::string error_message;
+	std::unordered_set<std::string> identifiers;
 
 	void parse();
+	void check_syntax();
+	void generate_expressions();
+	void reduce_expressions();
 	std::string get_reduced_form() const;
 public:
 	computor(const computor &other) = delete;
