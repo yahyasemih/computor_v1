@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/12 16:40:28 by yez-zain          #+#    #+#             */
+/*   Updated: 2021/11/18 01:03:23 by yez-zain         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "computor.hpp"
+
+int main(int argc, char *argv[]) {
+	if (argc != 2) {
+		std::cout << "Usage: computor equation" << std::endl;
+		return 1;
+	} else {
+		computor c(argv[1]);
+		c.compile();
+		if (c.is_malformed_input())
+			std::cout << "error: " << c.get_error_message() << std::endl;
+		else {
+			auto expressions = c.get_result();
+			std::sort(expressions.begin(), expressions.end(), [](const expression &exp1, const expression &exp2) { return exp1.get_degree() < exp2.get_degree(); });
+			for (expression exp : expressions) {
+				std::cout << "degree: " << exp.get_degree() << ", coefficient: " << exp.get_coefficient() << ", variable: " << exp.get_variable() << std::endl;
+			}
+		}
+
+	}
+	return 0;
+}
