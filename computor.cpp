@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 21:49:22 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 22:57:21 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,14 @@ void computor::generate_expressions() {
 					i += 3;
 				}
 			} else if (tokens[i + 1].get_type() == MULTIPLY) {
+				const std::string &identifier = tokens[i + 2].get_value();
+				if (!identifier.empty()) {
+					identifiers.insert(identifier);
+				}
+				if (identifiers.size() > 1) {
+					error_message = "Too many variables";
+					break;
+				}
 				if (tokens[i + 3].get_type() == END
 					|| tokens[i + 3].get_type() == PLUS
 					|| tokens[i + 3].get_type() == MINUS
