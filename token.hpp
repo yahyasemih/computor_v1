@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 19:57:56 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 17:32:03 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:01:38 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ public:
 
 	token(const std::string &value, int index, type token_type);
 	token(char value, int index, type token_type);
-	token(int index, type token_type); // for some types of tokens (space, equal)
+	token(int index, type token_type);
 	token(std::string &&value, int index, type token_type);
 	~token() = default;
 

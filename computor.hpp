@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 16:20:07 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 19:09:09 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ public:
 	computor(const char *input);
 	~computor() = default;
 
-	inline bool is_malformed_input() const { return !error_message.empty(); }
-	inline const std::string &get_error_message() const { return error_message; }
-	inline const std::vector<expression> &get_result() const { return expressions; }
+	bool is_malformed_input() const { return !error_message.empty(); }
+	const std::string &get_error_message() const { return error_message; }
+	const std::vector<expression> &get_result() const { return expressions; }
 
 	void compile();
 	void evaluate();
 };
-
-
 
 #endif // COMPUTOR_HPP
