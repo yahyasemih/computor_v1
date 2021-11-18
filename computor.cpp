@@ -6,13 +6,13 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 22:57:21 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 23:15:00 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "computor.hpp"
 
-computor::computor(const char *input) : input(input) {
+computor::computor(const char *input, int flags) : input(input), flags(flags) {
 }
 
 std::string extract_identifier(std::string::const_iterator &it) {
@@ -102,6 +102,7 @@ void computor::parse() {
 	}
 	tokens.emplace_back(input.size(), type::END);
 }
+
 void computor::check_syntax() {
 	for (size_t i = 1; i < tokens.size(); ++i) {
 		const token &previous = tokens[i - 1];
@@ -238,16 +239,31 @@ void computor::reduce_expressions() {
 }
 
 void computor::compile() {
+	if (flags & F_VERBOSE) {
+		std::cout << "Parsing input..." << std::endl;
+	}
 	parse();
+	if (flags & F_VERBOSE) {
+		std::cout << "Parsing input...done" << std::endl;
+	}
 	if (is_malformed_input()) {
 		return;
 	}
 
+	if (flags & F_VERBOSE) {
+		std::cout << "Checking syntax..." << std::endl;
+	}
 	check_syntax();
 	if (is_malformed_input()) {
 		return;
 	}
+	if (flags & F_VERBOSE) {
+		std::cout << "Checking syntax...done" << std::endl;
+	}
 
+	if (flags & F_VERBOSE) {
+		std::cout << "Generating expressions from equation..." << std::endl;
+	}
 	generate_expressions();
 	if (is_malformed_input()) {
 		expressions.clear();
@@ -255,8 +271,16 @@ void computor::compile() {
 		identifiers.clear();
 		return;
 	}
-
+	if (flags & F_VERBOSE) {
+		std::cout << "Generating expressions from equation...done" << std::endl;
+	}
+	if (flags & F_VERBOSE) {
+		std::cout << "Reducing expressions..." << std::endl;
+	}
 	reduce_expressions();
+	if (flags & F_VERBOSE) {
+		std::cout << "Reducing expressions...done" << std::endl;
+	}
 }
 
 void computor::evaluate() {
@@ -331,8 +355,39 @@ std::string computor::get_reduced_form() const {
 		if (i != 0) {
 			string_builder << (exp.get_coefficient() >= 0 ? " + " : " ");
 		}
-		string_builder << exp.get_coefficient() << " * " << exp.get_variable()
-			<< " ^ " << exp.get_degree();
+		if (!(flags & F_NORMAL)) {
+			string_builder << exp.get_coefficient() << " * "
+				<< exp.get_variable() << " ^ " << exp.get_degree();
+		} else {
+			if (exp.get_coefficient() == 1) {
+				if (exp.get_degree() >= 1) {
+					string_builder << exp.get_variable();
+					if (exp.get_degree() >= 2) {
+						string_builder << " ^ " << exp.get_degree();
+					}
+				} else {
+					string_builder << "1";
+				}
+			} else if (exp.get_coefficient() == -1) {
+				string_builder << "-";
+				if (exp.get_degree() >= 1) {
+					string_builder << exp.get_variable();
+					if (exp.get_degree() >= 2) {
+						string_builder << " ^ " << exp.get_degree();
+					}
+				} else {
+					string_builder << "1";
+				}
+			} else {
+				string_builder << exp.get_coefficient();
+				if (exp.get_degree() >= 1) {
+					string_builder << " * " << exp.get_variable();
+					if (exp.get_degree() >= 2) {
+						string_builder << " ^ " << exp.get_degree();
+					}
+				}
+			}
+		}
 	}
 	string_builder << " = 0";
 

@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 19:27:43 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/18 21:25:51 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@
 #include "token.hpp"
 #include "utilities.hpp"
 
+#define F_VERBOSE 1
+#define F_NORMAL 2
+
 class computor {
 private:
+	const std::string input;
+	int flags;
 	std::vector<token> tokens;
 	std::vector<expression> expressions;
-	const std::string input;
 	std::string error_message;
 	std::unordered_set<std::string> identifiers;
 
@@ -42,7 +46,7 @@ public:
 	computor &operator=(const computor &other) = delete;
 	computor &operator=(computor &&other) = delete;
 
-	computor(const char *input);
+	computor(const char *input, int flags = 0);
 	~computor() = default;
 
 	bool is_malformed_input() const { return !error_message.empty(); }
