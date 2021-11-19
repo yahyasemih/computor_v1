@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/19 01:01:05 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/19 01:53:04 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void computor::generate_expressions() {
 					identifiers.insert(identifier);
 				}
 				if (identifiers.size() > 1) {
-					error_message = "Too many variable names";
+					error_message = "too many variables";
 					break;
 				}
 				if (tokens[i + 2].get_type() == END
@@ -163,7 +163,7 @@ void computor::generate_expressions() {
 					identifiers.insert(identifier);
 				}
 				if (identifiers.size() > 1) {
-					error_message = "Too many variables";
+					error_message = "too many variables";
 					break;
 				}
 				if (tokens[i + 3].get_type() == END
@@ -188,7 +188,7 @@ void computor::generate_expressions() {
 				identifiers.insert(identifier);
 			}
 			if (identifiers.size() > 1) {
-				error_message = "Too many variables";
+				error_message = "too many variables";
 				break;
 			}
 			if (tokens[i + 1].get_type() == END
