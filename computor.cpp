@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/19 01:53:04 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/19 11:04:20 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,12 @@ void computor::generate_expressions() {
 						tokens[i + 1].get_value());
 					++i;
 				} else if (tokens[i + 2].get_type() == POWER) {
+					const std::string &pow = tokens[i + 3].get_value();
+					if (std::count(pow.begin(), pow.end(), '.') >= 1) {
+						error_message = "power `" + pow + "` invalid at line 1:"
+							+ std::to_string(tokens[i + 3].get_index() + 1);
+						break;
+					}
 					expressions.emplace_back(std::stoi(tokens[i + 3].get_value()),
 						minus * sign * std::stod(tokens[i].get_value()),
 						tokens[i + 1].get_value());
@@ -175,6 +181,12 @@ void computor::generate_expressions() {
 						tokens[i + 2].get_value());
 					i += 2;
 				} else if (tokens[i + 3].get_type() == POWER) {
+					const std::string &pow = tokens[i + 4].get_value();
+					if (std::count(pow.begin(), pow.end(), '.') >= 1) {
+						error_message = "power `" + pow + "` invalid at line 1:"
+							+ std::to_string(tokens[i + 4].get_index() + 1);
+						break;
+					}
 					expressions.emplace_back(std::stoi(tokens[i + 4].get_value()),
 						minus * sign * std::stod(tokens[i].get_value()),
 						tokens[i + 2].get_value());
@@ -198,6 +210,12 @@ void computor::generate_expressions() {
 				expressions.emplace_back(1,
 					minus * sign * 1.0, tokens[i].get_value());
 			} else if (tokens[i + 1].get_type() == POWER) {
+				const std::string &pow = tokens[i + 2].get_value();
+				if (std::count(pow.begin(), pow.end(), '.') >= 1) {
+					error_message = "power `" + pow + "` invalid at line 1:"
+						+ std::to_string(tokens[i + 2].get_index() + 1);
+					break;
+				}
 				expressions.emplace_back(std::stoi(tokens[i + 2].get_value()),
 					minus * sign * 1.0, tokens[i].get_value());
 				i += 2;
