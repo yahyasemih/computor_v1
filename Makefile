@@ -6,7 +6,7 @@
 #    By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 17:21:27 by yez-zain          #+#    #+#              #
-#    Updated: 2021/11/18 17:39:13 by yez-zain         ###   ########.fr        #
+#    Updated: 2021/11/19 01:05:46 by yez-zain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ OBJ = $(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CXX) $(CXXFLAGS) -c $(SRC)
 	@$(CXX) -o $(NAME) $(OBJ)
 clean:
 	@/bin/rm -f $(OBJ)
