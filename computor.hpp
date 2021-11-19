@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 21:25:51 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/19 01:01:06 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "utilities.hpp"
 
 #define F_VERBOSE 1
-#define F_NORMAL 2
+#define F_NATURAL 2
 
 class computor {
 private:

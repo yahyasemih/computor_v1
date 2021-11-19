@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 23:15:00 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/19 01:01:05 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,7 +355,7 @@ std::string computor::get_reduced_form() const {
 		if (i != 0) {
 			string_builder << (exp.get_coefficient() >= 0 ? " + " : " ");
 		}
-		if (!(flags & F_NORMAL)) {
+		if (!(flags & F_NATURAL)) {
 			string_builder << exp.get_coefficient() << " * "
 				<< exp.get_variable() << " ^ " << exp.get_degree();
 		} else {

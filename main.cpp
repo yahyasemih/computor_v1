@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:40:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/18 23:44:30 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/19 01:01:05 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 			if (argv[i][j] == 'v') {
 				flags |= F_VERBOSE;
 			} else if (argv[i][j] == 'n') {
-				flags |= F_NORMAL;
+				flags |= F_NATURAL;
 			} else {
 				std::cout << "computor: illegal option -- " << argv[i][j]
 					<< std::endl;
