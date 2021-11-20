@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 16:40:28 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/19 01:01:05 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/20 08:23:07 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 int main(int argc, char *argv[]) {
 	int i = 1;
 	int flags = 0;
+
+	if (argc == 1) {
+		std::cout << "usage: computor [-nv] \"equation\"" << std::endl;
+		return 1;
+	}
 
 	while (i < argc - 1 && argv[i][0] == '-') {
 		for (int j = 1; argv[i][j] != '\0'; ++j) {

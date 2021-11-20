@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/19 11:04:20 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/20 08:22:38 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,11 @@ void computor::compile() {
 	if (flags & F_VERBOSE) {
 		std::cout << "Generating expressions from equation..." << std::endl;
 	}
-	generate_expressions();
+	try {
+		generate_expressions();
+	} catch (const std::out_of_range &e) {
+		error_message = "number too large";
+	}
 	if (is_malformed_input()) {
 		expressions.clear();
 		tokens.clear();
