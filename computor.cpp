@@ -6,7 +6,7 @@
 /*   By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 08:59:23 by yez-zain          #+#    #+#             */
-/*   Updated: 2021/11/20 08:22:38 by yez-zain         ###   ########.fr       */
+/*   Updated: 2021/11/20 17:37:37 by yez-zain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,14 +357,16 @@ void computor::evaluate() {
 	} else if (delta > 0) {
 		std::cout << "Discriminant is strictly positive,"
 			" the two solutions are:" << std::endl;
-		std::cout << ((-b - my_sqrt(delta)) / (2.0 * a)) << std::endl;
-		std::cout << ((-b + my_sqrt(delta)) / (2.0 * a)) << std::endl;
+		double root = my_sqrt(delta);
+		std::cout << ((-b - root) / (2.0 * a)) << std::endl;
+		std::cout << ((-b + root) / (2.0 * a)) << std::endl;
 	} else {
+		double root = my_sqrt(delta);
 		std::cout << "Discriminant is strictly negative,"
 			" the two complex solutions are:" << std::endl;
-		std::cout << (-b/ (2.0 * a)) << " + " << (my_sqrt(-delta) / (2.0 * a))
+		std::cout << (-b/ (2.0 * a)) << " + " << (root / (2.0 * a))
 			<< "i" << std::endl;
-		std::cout << (-b/ (2.0 * a)) << " - " << (my_sqrt(-delta) / (2.0 * a))
+		std::cout << (-b/ (2.0 * a)) << " - " << (root / (2.0 * a))
 			<< "i" << std::endl;
 	}
 }
