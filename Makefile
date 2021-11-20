@@ -6,7 +6,7 @@
 #    By: yez-zain <yez-zain@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/18 17:21:27 by yez-zain          #+#    #+#              #
-#    Updated: 2021/11/19 01:05:46 by yez-zain         ###   ########.fr        #
+#    Updated: 2021/11/20 11:43:23 by yez-zain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,3 +28,5 @@ fclean: clean
 	@/bin/rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: clean fclean all re
